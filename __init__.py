@@ -1,3 +1,4 @@
+import os
 from typing import Union
 
 from nonebot import get_plugin_config, on_command
@@ -53,8 +54,19 @@ async def _(bot: Bot, event: Union[PrivateMessageEvent, GroupMessageEvent]):
         MessageSegment.at(event.get_user_id()) +
         MessageSegment.text("✅ 服务器 yee.autos:2000 可用")
         )
-    await rule.finish(
+    await rule.send(
         MessageSegment.reply(event.message_id) +
         MessageSegment.at(event.get_user_id()) +
         MessageSegment.text("❌ 3 次尝试均失败，服务器不可用")
         )
+    await rule.send(
+        MessageSegment.reply(event.message_id) +
+        MessageSegment.at(event.get_user_id()) +
+        MessageSegment.text("rebooting.."))
+    with os.popen("sh /usr/local/bin/phira_restar.sh") as pipe:  # noqa: ASYNC220
+        await rule.finish(
+        MessageSegment.reply(event.message_id) +
+        MessageSegment.at(event.get_user_id()) +
+        MessageSegment.text(f"Output: {pipe.read()}"))
+
+
