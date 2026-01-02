@@ -45,7 +45,7 @@ async def _(bot: Bot, event: Union[PrivateMessageEvent, GroupMessageEvent]):
         event,
         MessageSegment.reply(event.message_id) +
         MessageSegment.at(event.get_user_id()) +
-        MessageSegment.text("稍等一下喵~")
+        MessageSegment.text("哦")
         )
     if result:
         await rule.finish(
